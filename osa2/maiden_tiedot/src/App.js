@@ -6,15 +6,13 @@ import axios from 'axios';
 const App = () => {
   const [ countries, setCountries ] = useState([])
   const [ show, setShow ] = useState('')
-  const [ weatherMap, setWeatherMap ] = useState(new Map([]))
+  const [ weatherMap, setWeatherMap ] = useState({})
 
   useEffect(() => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
         const countries = response.data
-        countries.map(country =>
-          setWeatherMap(w => w.set(country.name, null)))
         setCountries(countries)
       })
   }, [])
@@ -24,18 +22,18 @@ const App = () => {
     country => country.name.toLowerCase().includes(show.toLowerCase())
   )
 
-  if (filteredCountries.length === 1) {
-    const country = filteredCountries[0]
-    const API_KEY='ENTER API KEY HERE'
-    
-    if (weatherMap.get(country.name) === null) {
-      axios
-        .get(`https://api.apixu.com/v1/current.json?key=${API_KEY}&q=${country.capital}`)
-        .then(response => setWeatherMap(
-          w => w.set(country.name, response.data)
-        ))
+  useEffect(() => {
+    if (filteredCountries.length === 1) {
+      const country = filteredCountries[0]
+      const API_KEY='ENTER API KEY HERE'
+      if (!weatherMap[country.capital]) {
+        axios
+          .get(`https://api.apixu.com/v1/current.json?key=${API_KEY}&q=${country.capital}`)
+          .then(response => setWeatherMap({ ...weatherMap, [country.capital]: response.data }
+          ))
+      }
     }
-  }
+  })
 
   return (
     <div>

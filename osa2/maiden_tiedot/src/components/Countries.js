@@ -14,7 +14,7 @@ const Countries = ({ countries, weatherMap }) => {
 
     if (countries.length === 1) {
       const country = countries[0]
-      const weather = weatherMap.get(country.name)
+      const weather = weatherMap[country.capital]
       return <CountrySummary country={country} weather={weather} />
     }
   }
@@ -33,8 +33,7 @@ const CountrySummary = ({ country, weather }) => {
     country.languages.map(lng => <li key={lng.name}>{lng.name}</li>)
   )
 
-  const weatherElement = () => weather === null
-    ? <div></div> : <Weather weather={weather} />
+  const weatherElement = weather && <Weather weather={weather} />
 
   return (
     <div>
@@ -49,7 +48,7 @@ const CountrySummary = ({ country, weather }) => {
       </ul>
       <img src={country.flag} alt={`Flag of ${country.name}`}
         display="block" width="200px" />
-      {weatherElement()}
+      {weatherElement}
     </div>
   )
 }
