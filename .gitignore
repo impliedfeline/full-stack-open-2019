@@ -2,3 +2,4 @@ node_modules
 tags
 app-env
 .env
+build
