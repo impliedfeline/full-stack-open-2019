@@ -62,6 +62,12 @@ const App = () => {
         showMessage(`Added ${returnedPerson.name}`, setSuccessMessage)
         resetForm()
       })
+      .catch(error => {
+        console.log(error.response.data)
+        showMessage(
+          `${error.response.data.error}`,
+          setErrorMessage)
+      })
   }
 
   const filteredPersons = showName === '' ? persons :
