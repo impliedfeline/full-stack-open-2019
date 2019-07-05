@@ -51,6 +51,12 @@ const App = () => {
               setSuccessMessage)
             resetForm()
           })
+          .catch(error => {
+            console.log(error.response.data)
+            showMessage(
+              `${error.response.data.error}`,
+              setErrorMessage)
+          })
       }
       return
     }
