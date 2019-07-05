@@ -1,4 +1,21 @@
 diff --git a/osa2/puhelinluettelo/src/App.js b/osa2/puhelinluettelo/src/App.js
+index 99b70be..4f89b90 100644
+--- a/osa2/puhelinluettelo/src/App.js
++++ b/osa2/puhelinluettelo/src/App.js
+@@ -51,6 +51,12 @@ const App = () => {
+               setSuccessMessage)
+             resetForm()
+           })
++          .catch(error => {
++            console.log(error.response.data)
++            showMessage(
++              `${error.response.data.error}`,
++              setErrorMessage)
++          })
+       }
+       return
+     }
+diff --git a/osa2/puhelinluettelo/src/App.js b/osa2/puhelinluettelo/src/App.js
 index 14e776d..99b70be 100644
 --- a/osa2/puhelinluettelo/src/App.js
 +++ b/osa2/puhelinluettelo/src/App.js
